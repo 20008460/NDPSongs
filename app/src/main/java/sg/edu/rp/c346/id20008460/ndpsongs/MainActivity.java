@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
                 DBHelper dbh = new DBHelper(MainActivity.this);
                 long inserted_id = dbh.insertSong(title,singer,year, stars);
+                Toast.makeText(MainActivity.this , "Item has been successfully inserted" , Toast.LENGTH_LONG).show();
             }
         });
 

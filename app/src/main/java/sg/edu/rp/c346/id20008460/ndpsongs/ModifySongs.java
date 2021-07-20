@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class ModifySongs extends AppCompatActivity {
 
-    Button btnUpdate , btnDelete;
+    Button btnUpdate , btnDelete, btnCancel;
     EditText etTitle, etSinger , etYear;
 
     RadioGroup rgStar;
@@ -28,6 +28,7 @@ public class ModifySongs extends AppCompatActivity {
 
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
+        btnCancel = findViewById(R.id.buttonCancel);
 
         etTitle = findViewById(R.id.upTitle);
         etSinger = findViewById(R.id.upSingers);
@@ -94,6 +95,15 @@ public class ModifySongs extends AppCompatActivity {
                 dbh.deleteSong(data.get_id());
 
                 finish();
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ModifySongs.this,
+                        ShowSongs.class);
+                startActivity(i);
             }
         });
 

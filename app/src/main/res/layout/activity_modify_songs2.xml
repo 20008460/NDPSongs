@@ -84,8 +84,9 @@
     </RadioGroup>
 
     <LinearLayout
+        android:id="@+id/Cance"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
@@ -104,10 +105,10 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonCancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Cancel" />
 
 
 </LinearLayout>

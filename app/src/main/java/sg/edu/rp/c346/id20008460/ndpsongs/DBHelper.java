@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "song.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String TABLE_SONG = "song";
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_TITLE = "Title";
@@ -140,9 +140,13 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<Song> songs = new ArrayList<Song>();
 
         SQLiteDatabase db = this.getReadableDatabase();
+
+
         String[] columns= {COLUMN_ID, COLUMN_TITLE, COLUMN_SINGERS, COLUMN_YEAR, COLUMN_STAR};
         String condition = COLUMN_YEAR + " Like ?";
         String[] args = { "%" +  keyword + "%"};
+
+
         Cursor cursor = db.query(TABLE_SONG, columns, condition, args,
                 null, null, null, null);
 
