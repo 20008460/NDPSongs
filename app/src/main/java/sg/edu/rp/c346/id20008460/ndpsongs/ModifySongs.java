@@ -38,7 +38,8 @@ public class ModifySongs extends AppCompatActivity {
 
         rbStar1 = findViewById(R.id.star1);
         rbStar2 = findViewById(R.id.star2);
-        rbStar3 = findViewById(R.id.star4);
+        rbStar3 = findViewById(R.id.star3);
+        rbStar4 = findViewById(R.id.star4);
         rbStar5 = findViewById(R.id.star5);
 
         Intent i = getIntent();

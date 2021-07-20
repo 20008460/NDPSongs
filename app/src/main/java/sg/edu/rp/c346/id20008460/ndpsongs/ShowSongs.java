@@ -32,6 +32,9 @@ public class ShowSongs extends AppCompatActivity {
     Spinner spnYears;
     HashSet<Integer> hs;
 
+    //
+    private String filteredYear;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,11 +95,23 @@ public class ShowSongs extends AppCompatActivity {
             public void onClick(View v) {
                 DBHelper dbh = new DBHelper(ShowSongs.this);
                 alSong.clear();
+                alDuplicate.clear();
                 int keyword = 5;
 
                 alSong.addAll(dbh.getAllSong(keyword));
 
+                for (int i = 0 ; i < alSong.size() ; i ++) {
+                    if (alSong.get(i).toString().contains(filteredYear) == true) {
+                        alDuplicate.add(alSong.get(i));
+                    }
+                }
 
+                alSong.clear();
+                for (int h = 0 ; h < alDuplicate.size() ; h ++) {
+                    alSong.add(alDuplicate.get(h));
+                }
+
+                alDuplicate.clear();
                 aa.notifyDataSetChanged();
             }
         });
@@ -120,6 +135,7 @@ public class ShowSongs extends AppCompatActivity {
                     if (position == i) {
                         alSong.clear();
                         alSong.addAll(dbh.filterYear(keyword));
+                        filteredYear = Integer.toString(keyword);
 
                     }
                 }
