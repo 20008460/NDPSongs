@@ -31,8 +31,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_TITLE + " TEXT , "
                 + COLUMN_SINGERS + " TEXT , "
-                + COLUMN_STAR + " TEXT , "
-                + COLUMN_YEAR + " TEXT )";
+                + COLUMN_STAR + " INTEGER , "
+                + COLUMN_YEAR + " INTEGER )";
         db.execSQL(createSongTable);
     }
 

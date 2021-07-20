@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
+
 
 public class ShowSongs extends AppCompatActivity {
 
@@ -26,10 +26,9 @@ public class ShowSongs extends AppCompatActivity {
 
     ListView lvSong;
     ArrayAdapter<Song> aa ;
-    ArrayAdapter<Integer> aaYears;
-    ArrayList<Song> alSong  ;
-    ArrayList<Integer> alYear , alDuplicate;
-    Song details;
+    ArrayAdapter<Integer> aaYears; // store all the years
+    ArrayList<Song> alSong  , alDuplicate , alContainFiveStar;
+    ArrayList<Integer> alYear ;
     Spinner spnYears;
     HashSet<Integer> hs;
 
@@ -45,8 +44,8 @@ public class ShowSongs extends AppCompatActivity {
         DBHelper dbh = new DBHelper(ShowSongs.this);
 
         alSong = new ArrayList<Song>();
+        alDuplicate = new ArrayList<Song>();
         alYear = new ArrayList<Integer>();
-        alDuplicate = new ArrayList<Integer>();
 
         alSong.addAll(dbh.getAllSong());
 
@@ -67,9 +66,10 @@ public class ShowSongs extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, alSong);
 
         aaYears = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, alYear);
+        spnYears.setAdapter(aaYears);
 
         lvSong.setAdapter(aa);
-        spnYears.setAdapter(aaYears);
+
 
 
         lvSong.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,6 +93,7 @@ public class ShowSongs extends AppCompatActivity {
                 DBHelper dbh = new DBHelper(ShowSongs.this);
                 alSong.clear();
                 int keyword = 5;
+
                 alSong.addAll(dbh.getAllSong(keyword));
 
 
@@ -119,10 +120,10 @@ public class ShowSongs extends AppCompatActivity {
                     if (position == i) {
                         alSong.clear();
                         alSong.addAll(dbh.filterYear(keyword));
-                        aa.notifyDataSetChanged();
+
                     }
                 }
-
+                aa.notifyDataSetChanged();
 
             }
             @Override
@@ -137,7 +138,6 @@ public class ShowSongs extends AppCompatActivity {
         super.onResume();
 
         alSong.clear();
-        alDuplicate.clear();
 
         DBHelper dbh = new DBHelper(ShowSongs.this);
         alSong.addAll(dbh.getAllSong());
@@ -155,6 +155,8 @@ public class ShowSongs extends AppCompatActivity {
 
         alYear.clear();
         alYear.addAll(hs);
+
+        Collections.sort(alYear);
 
         aaYears.notifyDataSetChanged();
 
