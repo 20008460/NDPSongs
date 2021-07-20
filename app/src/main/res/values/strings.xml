@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NDPSongs</string>
+    <string name="title_activity_modify_songs">ModifySongs</string>
+
+    <string-array name="year">
+    </string-array>
+
+</resources>
