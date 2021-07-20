@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cursoradapter.widget.CursorAdapter;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -124,9 +127,11 @@ public class ShowSongs extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(), position+1 + " : " + text , Toast.LENGTH_LONG).show();
 
                 int yearCount = spnYears.getAdapter().getCount();
+                SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+                SharedPreferences.Editor prefeditor = prefs.edit();
 
+                prefeditor.putInt("spnIndex" , position);
 
-                int min = 0;
                 int year = Integer.parseInt(text); // change it into int (year)
                 DBHelper dbh = new DBHelper(ShowSongs.this);
                 int keyword = year;
@@ -139,8 +144,10 @@ public class ShowSongs extends AppCompatActivity {
 
                     }
                 }
-                aa.notifyDataSetChanged();
 
+                prefeditor.putInt("year" , keyword );
+                aa.notifyDataSetChanged();
+                prefeditor.commit();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -153,18 +160,37 @@ public class ShowSongs extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        int x = prefs.getInt("spnIndex" , 0);
+        int year = prefs.getInt("year" , 0);
+        String strYear = Integer.toString(year);
+
+        spnYears.setSelection(x); // let it remain at the spinner selection
+
         alSong.clear();
+        alDuplicate.clear();
 
         DBHelper dbh = new DBHelper(ShowSongs.this);
         alSong.addAll(dbh.getAllSong());
-        aa.notifyDataSetChanged();
-
 
         alYear.clear();
+
 
         for (int i = 0 ; i < alSong.size() ; i ++) {
             alYear.add(alSong.get(i).getYear());
         }
+
+        for (int t = 0 ; t < alSong.size() ; t ++) {
+            if (alSong.get(t).toString().contains(strYear) == true) {
+                alDuplicate.add(alSong.get(t));
+            }
+        }
+
+        alSong.clear();
+        for (int h = 0 ; h < alDuplicate.size() ; h ++) {
+            alSong.add(alDuplicate.get(h));
+        }
+        aa.notifyDataSetChanged();
 
         hs.clear();
         hs.addAll(alYear);
